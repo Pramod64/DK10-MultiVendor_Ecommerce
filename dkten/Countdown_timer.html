@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="./CSS/theme.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://dkten.com/template/front/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/css/theme-red-1.css" rel="stylesheet" id="theme-config-link">
+        <link href="https://dkten.com/template/front/plugins/smedia/custom-1.css" rel="stylesheet">     
+        <!-- <link href="https://dkten.com/template/front/css/theme.css" rel="stylesheet"> -->
+        <link href="https://dkten.com/template/front/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/plugins/animate/animate.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/modal/css/sm.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/rateit/rateit.css" rel="stylesheet">
+        <script src="https://dkten.com/template/front/plugins/jquery/jquery-1.11.1.min.js"></script>
+       <link href="https://dkten.com/template/front/preloader/css/Icomoon/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="timer">
+            <div class="number-list">
+              <div class="item" data-days="">-96</div>
+              <div class="item" data-hours="">18</div>
+              <div class="item" data-minutes="">29</div>
+              <div class="item" data-seconds="">20</div>
+            </div>
+            <div class="unit-list">
+              <div class="item">Day</div>
+              <div class="item">Hour</div>
+              <div class="item">Minutes</div>
+              <div class="item">Seconds</div>
+            </div>
+          </div>
+
+          <style>
+            #timer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: right;
+          margin-left:75%;
+        
+        }
+        .number-list {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          margin-left:15px;
+        }
+        .number-list .item {
+          width: 30px;
+          height: 30px;
+          background: #006741;
+          margin-right: 15px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          color: white;
+          font-weight: 700;
+          font-family: sans-serif;
+        }
+        .unit-list {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 10px;
+        }
+        .unit-list .item {
+          width: 50px;
+         
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          color: #006741;
+          font-weight: 500;
+          font-family: sans-serif;
+        }
+        
+        .timer-end {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 24px;
+          color: #006741;
+          font-weight: 700;
+          font-family: sans-serif;
+        }
+        
+        
+        
+        </style>
+        <script>
+        (function ($) {
+          "use strict";
+          $.fn.aksCountDown = function (options) {
+            const aks = $(this);
+            var settings = $.extend(
+              {
+                endTime: "",
+                refresh: 1000,
+                onEnd: function () {}
+              },
+              options
+            );
+            return this.each(function (i) {
+              function endTimeCheck(d1, d2) {
+                return (
+                  d1.getFullYear() === d2.getFullYear() &&
+                  d1.getMonth() === d2.getMonth() &&
+                  d1.getDate() === d2.getDate()
+                );
+              }
+              function countTimer() {
+                var endTime = new Date(settings.endTime);
+                endTime = Date.parse(endTime) / 1000;
+        
+                var now = new Date();
+                now = Date.parse(now) / 1000;
+        
+                var timeLeft = endTime - now;
+        
+                var days = Math.floor(timeLeft / 86400);
+                var hours = Math.floor((timeLeft - days * 86400) / 3600);
+                var minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60);
+                var seconds = Math.floor(
+                  timeLeft - days * 86400 - hours * 3600 - minutes * 60
+                );
+        
+                if (hours < "10") {
+                  hours = "0" + hours;
+                }
+                if (minutes < "10") {
+                  minutes = "0" + minutes;
+                }
+                if (seconds < "10") {
+                  seconds = "0" + seconds;
+                }
+        
+                $(aks).find("[data-days]").html(days);
+                $(aks).find("[data-hours]").html(hours);
+                $(aks).find("[data-minutes]").html(minutes);
+                $(aks).find("[data-seconds]").html(seconds);
+              }
+              var now = new Date();
+              var endTime = new Date(settings.endTime);
+        
+              if (endTimeCheck(now, endTime) === true) {
+                settings.onEnd.call(aks);
+              } else {
+                setInterval(function () {
+                  countTimer();
+                }, settings.refresh);
+              }
+            });
+          };
+        })(jQuery);
+        
+        $("#timer").aksCountDown({
+          endTime: "30 september 2021 9:56:00 UTC+05:45",
+          onEnd: function () {
+            $(this).html('<div class="timer-end">Finished Time</div>');
+          }
+        });
+        
+            
+        </script>
+    </body>
+</html>

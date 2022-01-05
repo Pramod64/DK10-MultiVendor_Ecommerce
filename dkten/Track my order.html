@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Track my order</title>
+        <link rel="stylesheet" href="./CSS/vendor.min.css">
+        <link rel="stylesheet" href="./CSS/theme.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/css/theme-red-1.css" rel="stylesheet" id="theme-config-link">
+        <link href="https://dkten.com/template/front/plugins/smedia/custom-1.css" rel="stylesheet">     
+        <!-- <link href="https://dkten.com/template/front/css/theme.css" rel="stylesheet"> -->
+        <link href="https://dkten.com/template/front/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/plugins/animate/animate.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/modal/css/sm.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/rateit/rateit.css" rel="stylesheet">
+        <link href="https://dkten.com/template/front/plugins/animate/animate.min.css" rel="stylesheet">
+        <script src="https://dkten.com/template/front/plugins/jquery/jquery-1.11.1.min.js"></script>
+       <link href="https://dkten.com/template/front/preloader/css/Icomoon/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        
+        <section class="page-section">
+
+            <div class="wrap container">
+        
+                <!-- <div id="profile-content"> -->
+        
+                    <div class="row profile">
+        
+                        <div class="col-lg-3 col-md-3">
+        
+                            <input type="hidden" id="state" value="normal">
+        
+                            <div class="widget account-details">
+        
+                            <div class="information-title" style="margin-bottom: 0px;">My Profile</div>
+        
+                                <ul class="pleft_nav">
+                                    <a class="pnav_info" href="#"><li class="">Profile</li></a>
+        
+                                    
+                                    <a style="display: none" class="pnav_affiliation_point_earnings" href="#"><li>Affiliation Point Earnings</li></a>
+        
+                                    <a class="pnav_wishlist" href="#"><li>Wishlist</li></a>
+                                    <a class="pnav_coupon" href="#"><li>Coupon</li></a>
+        
+                                    <a class="pnav_order_history " href="#"><li class="active">Order History</li></a>
+                                  
+                                    <a class="pnav_downloads " href="#"><li>Downloads</li></a>
+        
+                                    
+                                    <a class="pnav_update_profile" href="#"><li>Edit Profile</li>
+        
+                                    </a><a class="pnav_ticket" href="#"><li>Support Ticket To Admin</li></a>
+        
+                                    
+                                      <a class="pnav_message_to_vendor" href="#"><li>Support Ticket To Vendor</li></a>
+                                </ul>
+        
+                            </div>
+        
+                        </div>
+        
+                        <div class="col-lg-9 col-md-9">
+        
+                            <div id="profile_content"><div class="row">
+            <div class="col-lg-9">
+                <div class="information-title">
+                    Your Order History        </div>
+                <div class="details-wrap">                                    
+                    <div class="details-box orders">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Payment Status</th>
+                                    <th>Delivery Status</th>
+                                    <th>Invoice</th>
+                                </tr>
+                            </thead>
+                            <tbody id="result2">
+        
+        <tr class="text-center" style="display:none;">
+            <td id="pagenation_set_links"></td>
+        </tr>
+        <!--/end pagination-->
+        
+        
+        <script>
+            $(document).ready(function(){ 
+                $('.pagination_box').html($('#pagenation_set_links').html());
+            });
+        </script>
+        
+        
+        </tbody>
+                        </table>
+                    </div>
+                </div>
+        
+                <input type="hidden" id="page_num2" value="0">
+        
+                <div class="pagination_box"></div>
+            </div>
+            <div class="col-lg-3">
+                <div class="information-title">
+                    Order Tracing        </div>
+                <div class="details-wrap">                                    
+                    <div class="details-box orders">                
+                        <form action="https://dkten.com/home/profile/order_tracing/" class="form-login" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        <input type="hidden" name="csrf_test_name" value="6a59ba27b4f54e8bf818379d1838e8b9">                                    
+            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <span style="width: 10%;float:left;padding-top: 3px;font-size: 25px;">#</span>
+                                        <input style="width: 90%;float:left;" class="form-control" name="sale_code" type="text" placeholder="Sale Code" spellcheck="false" data-ms-editor="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-top:0px;">
+                                    <span class="btn btn-theme btn-block signup_btn" data-callback="order_tracing" data-unsuccessful="Order Tracing Unsuccessful!" data-success="Order Traced Successfully!" data-ing="Checking..">
+                                        Trace My Order                            </span>
+                                    <div id="trace_details">
+        
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+        
+        <script>
+            function order_listed(page){
+                if(page == 'no'){
+                    page = $('#page_num2').val();   
+                } else {
+                    $('#page_num2').val(page);
+                }
+                var alert = $('#result2');
+                alert.load('https://dkten.com/home/order_listed/'+page,
+                    function(){
+                        //set_switchery();
+                    }
+                );   
+            }
+            $(document).ready(function() {
+                order_listed('0');
+            });
+        
+        </script></div>
+        
+                        </div>
+        
+                    </div>
+        
+                <!-- </div> -->
+        
+            </div>
+        
+</section>        
+    </body>
+</html>
